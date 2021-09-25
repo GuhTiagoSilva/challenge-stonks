@@ -1,12 +1,12 @@
 package com.stonks.fiap.challengestonks.services;
 
+import com.stonks.fiap.challengestonks.dto.StudentDTO;
 import com.stonks.fiap.challengestonks.dto.TeacherDTO;
-import com.stonks.fiap.challengestonks.dto.UserDTO;
 import com.stonks.fiap.challengestonks.entities.Role;
+import com.stonks.fiap.challengestonks.entities.Student;
 import com.stonks.fiap.challengestonks.entities.Teacher;
-import com.stonks.fiap.challengestonks.entities.User;
 import com.stonks.fiap.challengestonks.repositories.RoleRepository;
-import com.stonks.fiap.challengestonks.repositories.UserRepository;
+import com.stonks.fiap.challengestonks.repositories.TeacherRepository;
 import com.stonks.fiap.challengestonks.services.exceptions.DatabaseException;
 import com.stonks.fiap.challengestonks.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,45 +21,45 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class TeacherService {
 
     @Autowired
-    private UserRepository repository;
+    private TeacherRepository repository;
 
     @Autowired
     private RoleRepository roleRepository;
 
     @Transactional(readOnly = true)
-    public Page<UserDTO> findAll(Pageable pageable) {
-        Page<User> list = repository.findAll(pageable);
-        return list.map(x -> new UserDTO(x));
+    public Page<TeacherDTO> findAll(Pageable pageable) {
+        Page<Teacher> list = repository.findAll(pageable);
+        return list.map(x -> new TeacherDTO(x));
     }
 
     @Transactional
-    public UserDTO insert(UserDTO dto) {
-        User entity = new User();
+    public TeacherDTO insert (TeacherDTO dto) {
+        Teacher entity = new Teacher();
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
-        return new UserDTO(entity);
+        return new TeacherDTO(entity);
+    }
+
+    @Transactional
+    public TeacherDTO update (Long id, TeacherDTO dto) {
+        try {
+            Teacher entity = repository.getById(id);
+            copyDtoToEntity(dto, entity);
+            entity = repository.save(entity);
+            return new TeacherDTO(entity);
+        } catch(EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Id Not Found: " + id);
+        }
     }
 
     @Transactional(readOnly = true)
-    public UserDTO findById(Long id) {
-        Optional<User> result = repository.findById(id);
-        User entity = result.orElseThrow(() -> new ResourceNotFoundException("User Not Found: " + id));
-        return new UserDTO(entity);
-    }
-
-    @Transactional
-    public UserDTO update(UserDTO dto, Long id) {
-        try {
-            User entity = repository.getById(id);
-            copyDtoToEntity(dto, entity);
-            entity = repository.save(entity);
-            return new UserDTO(entity);
-        } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Id Not Found: " + id);
-        }
+    public TeacherDTO findById (Long id) {
+        Optional<Teacher> result = repository.findById(id);
+        Teacher entity = result.orElseThrow(() -> new ResourceNotFoundException("Teacher Not Found: " + id));
+        return new TeacherDTO(entity);
     }
 
     public void deleteById(Long id) {
@@ -72,24 +72,23 @@ public class UserService {
         }
     }
 
-
-    private void copyDtoToEntity(UserDTO dto, User entity) {
-        entity.setEmail(dto.getEmail());
+    private void copyDtoToEntity(TeacherDTO dto, Teacher entity) {
+        entity.setYearsOfExperience(dto.getYearsOfExperience());
         entity.setBornDate(dto.getBornDate());
+        entity.setEmail(dto.getEmail());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
+        entity.setPassword(dto.getPassword());
         Role role = roleRepository.getById(dto.getRoleId());
         validateRole(role, entity, dto.getRoleId());
-        entity.setPassword(dto.getPassword());
     }
 
-    private void validateRole(Role role, User entity, Long roleId) {
+    private void validateRole(Role role, Teacher entity, Long roleId) {
         if (role != null) {
             entity.setRole(role);
         } else {
             throw new ResourceNotFoundException("Role not found: " + roleId);
         }
     }
-
 
 }

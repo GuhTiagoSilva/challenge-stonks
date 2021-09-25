@@ -1,12 +1,13 @@
 package com.stonks.fiap.challengestonks.services;
 
-import com.stonks.fiap.challengestonks.dto.TeacherDTO;
-import com.stonks.fiap.challengestonks.dto.UserDTO;
+import com.stonks.fiap.challengestonks.dto.CourseDTO;
+import com.stonks.fiap.challengestonks.dto.StudentDTO;
+import com.stonks.fiap.challengestonks.entities.Course;
 import com.stonks.fiap.challengestonks.entities.Role;
-import com.stonks.fiap.challengestonks.entities.Teacher;
+import com.stonks.fiap.challengestonks.entities.Student;
 import com.stonks.fiap.challengestonks.entities.User;
 import com.stonks.fiap.challengestonks.repositories.RoleRepository;
-import com.stonks.fiap.challengestonks.repositories.UserRepository;
+import com.stonks.fiap.challengestonks.repositories.StudentRepository;
 import com.stonks.fiap.challengestonks.services.exceptions.DatabaseException;
 import com.stonks.fiap.challengestonks.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,45 +22,45 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class StudentService {
 
     @Autowired
-    private UserRepository repository;
+    private StudentRepository repository;
 
     @Autowired
     private RoleRepository roleRepository;
 
     @Transactional(readOnly = true)
-    public Page<UserDTO> findAll(Pageable pageable) {
-        Page<User> list = repository.findAll(pageable);
-        return list.map(x -> new UserDTO(x));
+    public Page<StudentDTO> findAll(Pageable pageable) {
+        Page<Student> list = repository.findAll(pageable);
+        return list.map(x -> new StudentDTO(x));
     }
 
     @Transactional
-    public UserDTO insert(UserDTO dto) {
-        User entity = new User();
+    public StudentDTO insert (StudentDTO dto) {
+        Student entity = new Student();
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
-        return new UserDTO(entity);
+        return new StudentDTO(entity);
+    }
+
+    @Transactional
+    public StudentDTO update (Long id, StudentDTO dto) {
+        try {
+            Student entity = repository.getById(id);
+            copyDtoToEntity(dto, entity);
+            entity = repository.save(entity);
+            return new StudentDTO(entity);
+        } catch(EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Id Not Found: " + id);
+        }
     }
 
     @Transactional(readOnly = true)
-    public UserDTO findById(Long id) {
-        Optional<User> result = repository.findById(id);
-        User entity = result.orElseThrow(() -> new ResourceNotFoundException("User Not Found: " + id));
-        return new UserDTO(entity);
-    }
-
-    @Transactional
-    public UserDTO update(UserDTO dto, Long id) {
-        try {
-            User entity = repository.getById(id);
-            copyDtoToEntity(dto, entity);
-            entity = repository.save(entity);
-            return new UserDTO(entity);
-        } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Id Not Found: " + id);
-        }
+    public StudentDTO findById (Long id) {
+        Optional<Student> result = repository.findById(id);
+        Student entity = result.orElseThrow(() -> new ResourceNotFoundException("Student Not Found: " + id));
+        return new StudentDTO(entity);
     }
 
     public void deleteById(Long id) {
@@ -72,18 +73,18 @@ public class UserService {
         }
     }
 
-
-    private void copyDtoToEntity(UserDTO dto, User entity) {
-        entity.setEmail(dto.getEmail());
+    private void copyDtoToEntity(StudentDTO dto, Student entity) {
+        entity.setRegistrationCode(dto.getRegistrationCode());
         entity.setBornDate(dto.getBornDate());
+        entity.setEmail(dto.getEmail());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
+        entity.setPassword(dto.getPassword());
         Role role = roleRepository.getById(dto.getRoleId());
         validateRole(role, entity, dto.getRoleId());
-        entity.setPassword(dto.getPassword());
     }
 
-    private void validateRole(Role role, User entity, Long roleId) {
+    private void validateRole(Role role, Student entity, Long roleId) {
         if (role != null) {
             entity.setRole(role);
         } else {
