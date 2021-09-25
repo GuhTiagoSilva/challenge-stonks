@@ -1,0 +1,25 @@
+<div class="container">
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Descrição</th>
+                <th>Duração</th>
+                <th>Atualizar</th>
+                <th>Deletar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let course of courseList">
+                <td> {{course.name}} </td>
+                <td> {{course.description}} </td>
+                <td> {{course.duration}} </td>
+                <td><button class="btn btn-success">Atualizar</button></td>
+                <td><button class="btn btn-danger">Deletar</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <button class="btn btn-dark">Cadastrar</button>
+    </div>
+</div>
