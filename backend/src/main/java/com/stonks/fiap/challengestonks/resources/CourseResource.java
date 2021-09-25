@@ -1,7 +1,6 @@
 package com.stonks.fiap.challengestonks.resources;
 
 import com.stonks.fiap.challengestonks.dto.CourseDTO;
-import com.stonks.fiap.challengestonks.dto.UserDTO;
 import com.stonks.fiap.challengestonks.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
