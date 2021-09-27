@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CoursesFormComponent } from './components/courses-form/courses-form.component';
-import { CoursesListComponent } from './components/courses-list/courses-list.component';
+import { CoursesFormComponent } from './components/courses/courses-form/courses-form.component';
+import { CoursesListComponent } from './components/courses/courses-list/courses-list.component';
 import { HomeComponent } from './components/home/home.component';
-import { StudentsFormComponent } from './components/students-form/students-form.component';
-import { StudentsListComponent } from './components/students-list/students-list.component';
-import { TeachersFormComponent } from './components/teachers-form/teachers-form.component';
-import { TeachersListComponent } from './components/teachers-list/teachers-list.component';
+import { StudentsFormComponent } from './components/students/students-form/students-form.component';
+import { StudentsListComponent } from './components/students/students-list/students-list.component';
+import { TeachersFormComponent } from './components/teachers/teachers-form/teachers-form.component';
+import { TeachersListComponent } from './components/teachers/teachers-list/teachers-list.component';
+
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
