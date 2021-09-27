@@ -1,1 +1,31 @@
-<p>students-list works!</p>
+<div class="container">
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Último Nome</th>
+                <th>Data de Nascimento</th>
+                <th>E-mail</th>
+                <th>Matrícula</th>
+                <th>Permissão</th>
+                <th>Atualizar</th>
+                <th>Deletar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let student of studentsList">
+                <td> {{student.firstName}} </td>
+                <td> {{student.lastName}} </td>
+                <td> {{student.bornDate | date }}</td>
+                <td> {{student.email}} </td>
+                <td> {{student.registrationCode}} </td>
+                <td> {{student.roleId}} </td>
+                <td><button class="btn btn-success">Atualizar</button></td>
+                <td><button class="btn btn-danger">Deletar</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <button class="btn btn-dark">Cadastrar</button>
+    </div>
+</div>

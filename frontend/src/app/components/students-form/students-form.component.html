@@ -1,1 +1,35 @@
-<p>students-form works!</p>
+<div class="container">
+    <form [formGroup]="studentForm" class="mt-5 mb-3">
+
+        <fieldset class="border p-4">
+            <legend class="w-auto">Cadastrar Professor</legend>
+            <div class="mt-3">
+                <label for="firstName" required>Nome</label>
+                <input type="text" name="firstName" class="form-control" formControlName="firstName">
+            </div>
+            <div class="mt-3">
+                <label for="lastName" required>Último Nome</label>
+                <input type="text" name="lastName" class="form-control" formControlName="lastName">
+            </div>
+            <div class="mt-3">
+                <label for="bornDate" required>Data de Nascimento</label>
+                <input type="date" name="bornDate" class="form-control" formControlName="bornDate">
+            </div>
+            <div class="mt-3">
+                <label for="email" required>E-mail</label>
+                <input type="email" name="email" class="form-control" formControlName="email">
+            </div>
+            <div class="mt-3">
+                <label for="password" required>Senha</label>
+                <input type="password" name="password" class="form-control" formControlName="password">
+            </div>
+            <div class="mt-3">
+                <label for="registrationCode" required>Matrícula</label>
+                <input type="text" name="registrationCode" class="form-control" formControlName="registrationCode">
+            </div>
+            
+            <!-- Falta adicionar o form de permissão aqui -->
+        </fieldset>
+        <button type="submit" class="btn btn-dark mt-3">Cadastrar</button>
+    </form>
+</div>

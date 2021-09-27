@@ -1,9 +1,9 @@
-export type Teacher = {
+export type Student = {
     id: number;
     firstName: string;
     lastName: string;
     bornDate: Date;
     email: string;
     roleId: number;
-    yearsOfExperience: number;
+    registrationCode: string;
 }
