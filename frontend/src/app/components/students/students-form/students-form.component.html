@@ -1,35 +1,65 @@
 <div class="container">
-    <form [formGroup]="studentForm" class="mt-5 mb-3">
+    <form [formGroup]="studentForm" class="mt-5 mb-3" (ngSubmit)="onSubmit()">
 
         <fieldset class="border p-4">
             <legend class="w-auto">Cadastrar Aluno</legend>
-            <div class="mt-3">
-                <label for="firstName" required>Nome</label>
-                <input type="text" name="firstName" class="form-control" formControlName="firstName">
-            </div>
-            <div class="mt-3">
-                <label for="lastName" required>Último Nome</label>
-                <input type="text" name="lastName" class="form-control" formControlName="lastName">
-            </div>
-            <div class="mt-3">
-                <label for="bornDate" required>Data de Nascimento</label>
-                <input type="date" name="bornDate" class="form-control" formControlName="bornDate">
-            </div>
-            <div class="mt-3">
-                <label for="email" required>E-mail</label>
-                <input type="email" name="email" class="form-control" formControlName="email">
-            </div>
-            <div class="mt-3">
-                <label for="password" required>Senha</label>
-                <input type="password" name="password" class="form-control" formControlName="password">
-            </div>
-            <div class="mt-3">
-                <label for="registrationCode" required>Matrícula</label>
-                <input type="text" name="registrationCode" class="form-control" formControlName="registrationCode">
-            </div>
-            
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label> Nome
+                </mat-label>
+                <input matInput formControlName="firstName" required>
+                <mat-error *ngIf="studentForm.controls.firstName.touched && studentForm.controls.firstName.invalid">
+                    <span *ngIf="studentForm.controls.firstName.errors.required">Campo Obrigatório.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label> Último Nome
+                </mat-label>
+                <input matInput formControlName="lastName" required>
+                <mat-error *ngIf="studentForm.controls.lastName.touched && studentForm.controls.lastName.invalid">
+                    <span *ngIf="studentForm.controls.lastName.errors.required">Campo Obrigatório.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Data de Nascimento</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="bornDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="studentForm.controls.bornDate.touched && studentForm.controls.bornDate.invalid">
+                    <span *ngIf="studentForm.controls.bornDate.errors.required">Campo Obrigatório.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label> E-mail
+                </mat-label>
+                <input matInput formControlName="email" required>
+                <mat-error *ngIf="studentForm.controls.email.touched && studentForm.controls.email.invalid">
+                    <span *ngIf="studentForm.controls.email.errors.required">Campo Obrigatório.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label> Senha
+                </mat-label>
+                <input matInput formControlName="password" type="password" required>
+                <mat-error *ngIf="studentForm.controls.password.touched && studentForm.controls.password.invalid">
+                    <span *ngIf="studentForm.controls.password.errors.required">Campo Obrigatório.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label> Código da Matrícula
+                </mat-label>
+                <input matInput formControlName="registrationCode" required>
+                <mat-error *ngIf="studentForm.controls.registrationCode.touched && studentForm.controls.registrationCode.invalid">
+                    <span *ngIf="studentForm.controls.registrationCode.errors.required">Campo Obrigatório.</span>
+                </mat-error>
+            </mat-form-field> 
+
             <!-- Falta adicionar o form de permissão aqui -->
         </fieldset>
-        <button type="submit" class="btn btn-dark mt-3">Cadastrar</button>
+        <button type="submit" mat-raised-button color="primary">Cadastrar</button>
     </form>
 </div>

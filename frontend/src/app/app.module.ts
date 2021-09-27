@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -13,9 +16,17 @@ import { HomeComponent } from './components/home/home.component';
 import { CoursesListComponent } from './components/courses/courses-list/courses-list.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { CoursesFormComponent } from './components/courses/courses-form/courses-form.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { ToastyModule } from 'ng2-toasty';
+import { ToastComponent } from './components/toast/toast.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
+    ToastComponent,
     AppComponent,
     CoursesFormComponent,
     MenuComponent,
@@ -28,11 +39,21 @@ import { CoursesFormComponent } from './components/courses/courses-form/courses-
     HomeComponent
   ],
   imports: [
+    ToastrModule.forRoot(),
+    MatIconModule,
     ReactiveFormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    ToastyModule.forRoot()
   ],
-  providers: [],
+  providers: [MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

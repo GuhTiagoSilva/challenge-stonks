@@ -19,9 +19,13 @@ export class TeachersFormComponent implements OnInit {
       bornDate: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      role: ['', [Validators.required]],
+      role: [3, [Validators.required]],
       yearsOfExperience: ['', Validators.required]
     });
+  }
+
+  onSubmit() {
+
   }
 
 }
