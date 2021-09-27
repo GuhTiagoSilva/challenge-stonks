@@ -2,7 +2,7 @@
     <form [formGroup]="teacherForm" class="mt-5 mb-3" (ngSubmit)="onSubmit()">
 
         <fieldset class="border p-4">
-            <legend class="w-auto">Cadastrar Aluno</legend>
+            <legend class="w-auto">Cadastrar Professor</legend>
             <mat-form-field class="form-field" appearance="outline">
                 <mat-label> Nome
                 </mat-label>
@@ -50,16 +50,14 @@
             </mat-form-field>
 
             <mat-form-field class="form-field" appearance="outline">
-                <mat-label> Código da Matrícula
+                <mat-label> Tempo de Experiência
                 </mat-label>
                 <input matInput formControlName="yearsOfExperience" required>
                 <mat-error *ngIf="teacherForm.controls.yearsOfExperience.touched && teacherForm.controls.yearsOfExperience.invalid">
                     <span *ngIf="teacherForm.controls.yearsOfExperience.errors.required">Campo Obrigatório.</span>
                 </mat-error>
             </mat-form-field> 
-
-            <!-- Falta adicionar o form de permissão aqui -->
         </fieldset>
-        <button type="submit" mat-raised-button color="primary" (click)="onSubmit()">Cadastrar</button>
+        <button type="submit" mat-raised-button color="primary">Cadastrar</button>
     </form>
 </div>

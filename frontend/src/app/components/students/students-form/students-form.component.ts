@@ -17,7 +17,7 @@ export class StudentsFormComponent implements OnInit {
     private service: StudentService,
     private toaster: ToastrService,
     private route: Router
-    ) {
+  ) {
 
   }
 
@@ -25,13 +25,13 @@ export class StudentsFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.studentForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', [Validators.required, Validators.minLength(5)]],
+      lastName: ['', [Validators.required, Validators.minLength(5)]],
       bornDate: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       roleId: [0],
-      registrationCode: ['', Validators.required]
+      registrationCode: ['', [Validators.required, Validators.minLength(2)]]
     });
   }
 
@@ -40,7 +40,6 @@ export class StudentsFormComponent implements OnInit {
     this.setRole();
 
     if (this.studentForm.valid) {
-
       const date = new Date(this.studentForm.get('bornDate').value);
       this.studentForm.get('bornDate').setValue(date);
 

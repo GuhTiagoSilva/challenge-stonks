@@ -53,12 +53,11 @@
                 <mat-label> Código da Matrícula
                 </mat-label>
                 <input matInput formControlName="registrationCode" required>
-                <mat-error *ngIf="studentForm.controls.registrationCode.touched && studentForm.controls.registrationCode.invalid">
+                <mat-error
+                    *ngIf="studentForm.controls.registrationCode.touched && studentForm.controls.registrationCode.invalid">
                     <span *ngIf="studentForm.controls.registrationCode.errors.required">Campo Obrigatório.</span>
                 </mat-error>
-            </mat-form-field> 
-
-            <!-- Falta adicionar o form de permissão aqui -->
+            </mat-form-field>
         </fieldset>
         <button type="submit" mat-raised-button color="primary">Cadastrar</button>
     </form>
