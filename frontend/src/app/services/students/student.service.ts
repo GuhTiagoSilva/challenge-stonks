@@ -10,14 +10,18 @@ export class StudentService {
 
   constructor(private httpClient: HttpClient) { }
 
-  apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl;
 
   create(student: Student) {
-    return this.httpClient.post(`${this.apiUrl}/students`, student);
+    return this.httpClient.post<Student>(`${this.apiUrl}/students`, student);
   }
 
   findById(id: number) {
-    return this.httpClient.get(`${this.apiUrl}/${id}`);
+    return this.httpClient.get<Student>(`${this.apiUrl}/${id}`);
+  }
+
+  findAll() {
+    return this.httpClient.get<Student[]>(`${this.apiUrl}/students`);
   }
 
 }

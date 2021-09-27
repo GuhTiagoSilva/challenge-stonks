@@ -12,14 +12,18 @@ export class TeacherService {
     private httpClient: HttpClient
   ) { }
 
-  apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl;
 
   create(teacher: Teacher) {
-    return this.httpClient.post(`${this.apiUrl}/teachers`, teacher);
+    return this.httpClient.post<Teacher>(`${this.apiUrl}/teachers`, teacher);
   }
 
   findById(id: number) {
-    return this.httpClient.get(`${this.apiUrl}/${id}`);
+    return this.httpClient.get<Teacher>(`${this.apiUrl}/${id}`);
+  }
+
+  findAll() {
+    return this.httpClient.get<Teacher[]>(`${this.apiUrl}/teachers`);
   }
 
 }

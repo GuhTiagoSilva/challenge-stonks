@@ -6,8 +6,7 @@
                 <th>Último Nome</th>
                 <th>Data de Nascimento</th>
                 <th>E-mail</th>
-                <th>Matrícula</th>
-                <th>Permissão</th>
+                <th>Código de Matrícula</th>
                 <th>Atualizar</th>
                 <th>Deletar</th>
             </tr>
@@ -19,13 +18,12 @@
                 <td> {{student.bornDate | date }}</td>
                 <td> {{student.email}} </td>
                 <td> {{student.registrationCode}} </td>
-                <td> {{student.roleId}} </td>
                 <td><button class="btn btn-success">Atualizar</button></td>
                 <td><button class="btn btn-danger">Deletar</button></td>
             </tr>
         </tbody>
     </table>
     <div class="row">
-        <button class="btn btn-dark">Cadastrar</button>
+        <button mat-raised-button color="primary" class="mt-3">Cadastrar</button>
     </div>
 </div>
