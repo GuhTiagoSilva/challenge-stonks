@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -24,9 +26,15 @@ public class CourseService {
 
 
     @Transactional(readOnly = true)
-    public Page<CourseDTO> findAll(Pageable pageable) {
+    public Page<CourseDTO> findAllPaged(Pageable pageable) {
         Page<Course> list = repository.findAll(pageable);
         return list.map(x -> new CourseDTO(x));
+    }
+
+    @Transactional(readOnly = true)
+    public List<CourseDTO> findAll() {
+        List<Course> list = repository.findAll();
+        return list.stream().map(x -> new CourseDTO(x)).collect(Collectors.toList());
     }
 
     @Transactional

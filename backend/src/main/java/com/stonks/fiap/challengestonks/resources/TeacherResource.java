@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = "/teachers")
 public class TeacherResource {
@@ -20,9 +22,9 @@ public class TeacherResource {
     private TeacherService service;
 
     @GetMapping
-    public ResponseEntity<Page<TeacherDTO>> findall(Pageable pageable) {
-        Page<TeacherDTO> page = service.findAll(pageable);
-        return ResponseEntity.ok().body(page);
+    public ResponseEntity<List<TeacherDTO>> findAll() {
+        List<TeacherDTO> result = service.findAll();
+        return ResponseEntity.ok().body(result);
     }
 
     @PostMapping

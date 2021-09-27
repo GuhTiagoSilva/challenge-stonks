@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TeacherService {
@@ -30,9 +32,15 @@ public class TeacherService {
     private RoleRepository roleRepository;
 
     @Transactional(readOnly = true)
-    public Page<TeacherDTO> findAll(Pageable pageable) {
+    public Page<TeacherDTO> findAllPaged(Pageable pageable) {
         Page<Teacher> list = repository.findAll(pageable);
         return list.map(x -> new TeacherDTO(x));
+    }
+
+    @Transactional(readOnly = true)
+    public List<TeacherDTO> findAll(){
+        List<Teacher> list = repository.findAll();
+        return list.stream().map(teacher -> new TeacherDTO(teacher)).collect(Collectors.toList());
     }
 
     @Transactional

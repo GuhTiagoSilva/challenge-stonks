@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
+@CrossOrigin("http://localhost:4200")
 @RestController
 @RequestMapping(value = "/courses")
 public class CourseResource {
@@ -19,8 +21,8 @@ public class CourseResource {
     private CourseService service;
 
     @GetMapping
-    public ResponseEntity<Page<CourseDTO>> findall(Pageable pageable) {
-        Page<CourseDTO> page = service.findAll(pageable);
+    public ResponseEntity<List<CourseDTO>> findall() {
+        List<CourseDTO> page = service.findAll();
         return ResponseEntity.ok().body(page);
     }
 

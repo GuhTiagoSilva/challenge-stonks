@@ -10,17 +10,17 @@ import java.util.Set;
 @Table(name = "tb_teacher")
 public class Teacher extends User {
 
-    private Integer yearsOfExperience;
+    private String yearsOfExperience;
 
     @ManyToMany
     @JoinTable(name = "tb_teacher_course", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Course> courses = new HashSet<>();
 
-    public Integer getYearsOfExperience() {
+    public String getYearsOfExperience() {
         return yearsOfExperience;
     }
 
-    public void setYearsOfExperience(Integer yearsOfExperience) {
+    public void setYearsOfExperience(String yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
     }
 }

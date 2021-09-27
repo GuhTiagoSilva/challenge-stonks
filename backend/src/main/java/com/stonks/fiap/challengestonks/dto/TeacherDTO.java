@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherDTO extends UserDTO {
-    private Integer yearsOfExperience;
+    private String yearsOfExperience;
     private List<CourseDTO> courses = new ArrayList<>();
 
     public TeacherDTO() {
@@ -18,11 +18,11 @@ public class TeacherDTO extends UserDTO {
         yearsOfExperience = entity.getYearsOfExperience();
     }
 
-    public Integer getYearsOfExperience() {
+    public String getYearsOfExperience() {
         return yearsOfExperience;
     }
 
-    public void setYearsOfExperience(Integer yearsOfExperience) {
+    public void setYearsOfExperience(String yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
     }
 
