@@ -9,11 +9,17 @@ import com.stonks.fiap.challengestonks.repositories.RoleRepository;
 import com.stonks.fiap.challengestonks.repositories.UserRepository;
 import com.stonks.fiap.challengestonks.services.exceptions.DatabaseException;
 import com.stonks.fiap.challengestonks.services.exceptions.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,13 +29,18 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository repository;
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable) {
@@ -47,6 +58,7 @@ public class UserService {
     public UserDTO insert(UserDTO dto) {
         User entity = new User();
         copyDtoToEntity(dto, entity);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity = repository.save(entity);
         return new UserDTO(entity);
     }
@@ -88,7 +100,6 @@ public class UserService {
         entity.setLastName(dto.getLastName());
         Role role = roleRepository.getById(dto.getRoleId());
         validateRole(role, entity, dto.getRoleId());
-        entity.setPassword(dto.getPassword());
     }
 
     private void validateRole(Role role, User entity, Long roleId) {
@@ -100,4 +111,18 @@ public class UserService {
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+
+        User user = repository.findByEmail(s);
+
+        if (user == null) {
+            logger.error("User Not Found: " + s);
+            throw new UsernameNotFoundException("Email not found");
+        }
+
+        logger.info("User found: " + s);
+        return user;
+
+    }
 }
