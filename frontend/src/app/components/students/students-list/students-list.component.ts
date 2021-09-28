@@ -20,6 +20,10 @@ export class StudentsListComponent implements OnInit {
   studentsList: Student[] = []
 
   ngOnInit(): void {
+    this.findAll();
+  }
+
+  findAll() {
     this.service.findAll().subscribe(data => {
       this.studentsList = data;
     });

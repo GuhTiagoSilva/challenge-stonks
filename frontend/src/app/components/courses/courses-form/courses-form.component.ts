@@ -25,18 +25,25 @@ export class CoursesFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.params["id"];
+    this.initForm();
 
+    if (this.id) {
+      this.findById();
+    }
+  }
+
+  private findById() {
+    this.service.findById(this.id).subscribe(response => {
+      this.setFormData(response);
+    });
+  }
+
+  private initForm() {
     this.courseForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
       duration: [null, Validators.required]
     });
-
-    if (this.id) {
-      this.service.findById(this.id).subscribe(response => {
-        this.setFormData(response);
-      });
-    }
   }
 
   private setFormData(data: Course) {

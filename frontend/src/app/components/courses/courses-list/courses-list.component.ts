@@ -16,6 +16,10 @@ export class CoursesListComponent implements OnInit {
   courseList: Course[] = []
 
   ngOnInit(): void {
+    this.findAll();
+  }
+
+  findAll() {
     this.service.findAll().subscribe(response => {
       this.courseList = response;
     })

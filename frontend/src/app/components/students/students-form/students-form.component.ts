@@ -29,7 +29,20 @@ export class StudentsFormComponent implements OnInit {
   ngOnInit(): void {
 
     this.id = this.activatedRoute.snapshot.params['id'];
+    this.initForm();
 
+    if (this.id) {
+      this.findById();
+    }
+  }
+
+  private findById() {
+    this.service.findById(this.id).subscribe(response => {
+      this.setFormData(response);
+    });
+  }
+
+  private initForm() {
     this.studentForm = this.formBuilder.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
@@ -39,15 +52,9 @@ export class StudentsFormComponent implements OnInit {
       roleId: [0],
       registrationCode: ['', [Validators.required, Validators.minLength(2)]]
     });
-
-    if (this.id) {
-      this.service.findById(this.id).subscribe(response => {
-        this.setFormData(response);
-      });
-    }
   }
 
-  setFormData(data: Student) {
+  private setFormData(data: Student) {
     this.studentForm = this.formBuilder.group({
       firstName: [data.firstName, [Validators.required, Validators.minLength(2)]],
       lastName: [data.lastName, [Validators.required, Validators.minLength(2)]],
@@ -99,7 +106,7 @@ export class StudentsFormComponent implements OnInit {
     }
   }
 
-  setRole() {
+  private setRole() {
     this.studentForm.get('roleId').setValue(1);
   }
 
