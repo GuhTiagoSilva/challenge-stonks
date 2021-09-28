@@ -40,24 +40,32 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label> Senha
-                </mat-label>
-                <input matInput formControlName="password" type="password" required>
-                <mat-error *ngIf="teacherForm.controls.password.touched && teacherForm.controls.password.invalid">
-                    <span *ngIf="teacherForm.controls.password.errors.required">Campo Obrigatório.</span>
-                </mat-error>
-            </mat-form-field>
+            <div *ngIf="!id">
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label> Senha
+                    </mat-label>
+                    <input matInput formControlName="password" type="password" required>
+                    <mat-error *ngIf="teacherForm.controls.password.touched && teacherForm.controls.password.invalid">
+                        <span *ngIf="teacherForm.controls.password.errors.required">Campo Obrigatório.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
             <mat-form-field class="form-field" appearance="outline">
                 <mat-label> Tempo de Experiência
                 </mat-label>
                 <input matInput formControlName="yearsOfExperience" required>
-                <mat-error *ngIf="teacherForm.controls.yearsOfExperience.touched && teacherForm.controls.yearsOfExperience.invalid">
+                <mat-error
+                    *ngIf="teacherForm.controls.yearsOfExperience.touched && teacherForm.controls.yearsOfExperience.invalid">
                     <span *ngIf="teacherForm.controls.yearsOfExperience.errors.required">Campo Obrigatório.</span>
                 </mat-error>
-            </mat-form-field> 
+            </mat-form-field>
         </fieldset>
-        <button type="submit" mat-raised-button color="primary" class="mt-3">Cadastrar</button>
+        <div *ngIf="!id">
+            <button type="submit" mat-raised-button color="primary" class="mt-3">Cadastrar</button>
+        </div>
+        <div *ngIf="id">
+            <button type="submit" mat-raised-button color="primary" class="mt-3">Atualizar</button>
+        </div>
     </form>
 </div>

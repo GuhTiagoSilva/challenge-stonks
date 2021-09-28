@@ -12,11 +12,14 @@ import { TeachersListComponent } from './components/teachers/teachers-list/teach
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'courses/create', component: CoursesFormComponent},
+  {path: 'courses/:id', component: CoursesFormComponent},
   {path: 'courses', component: CoursesListComponent},
   {path: 'teachers/create', component: TeachersFormComponent},
+  {path: 'teachers/:id', component: TeachersFormComponent},
   {path: 'teachers', component: TeachersListComponent},
   {path: 'students', component: StudentsListComponent},
-  {path: 'students/create', component: StudentsFormComponent}
+  {path: 'students/create', component: StudentsFormComponent},
+  {path: 'students/:id', component: StudentsFormComponent}
 ];
 
 @NgModule({

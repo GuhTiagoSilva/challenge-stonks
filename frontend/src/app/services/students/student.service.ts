@@ -17,11 +17,19 @@ export class StudentService {
   }
 
   findById(id: number) {
-    return this.httpClient.get<Student>(`${this.apiUrl}/${id}`);
+    return this.httpClient.get<Student>(`${this.apiUrl}/students/${id}`);
   }
 
   findAll() {
     return this.httpClient.get<Student[]>(`${this.apiUrl}/students`);
+  }
+
+  update(id: number, student: Student) {
+    return this.httpClient.put<Student>(`${this.apiUrl}/students/${id}`, student);
+  }
+
+  delete(id: number) {
+    return this.httpClient.delete<void>(`${this.apiUrl}/students/${id}`);
   }
 
 }

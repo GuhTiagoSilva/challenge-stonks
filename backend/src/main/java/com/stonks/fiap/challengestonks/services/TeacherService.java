@@ -39,7 +39,7 @@ public class TeacherService {
 
     @Transactional(readOnly = true)
     public List<TeacherDTO> findAll(){
-        List<Teacher> list = repository.findAll();
+        List<Teacher> list = repository.findAll().stream().filter(x -> x.getRole().getId() == 2).collect(Collectors.toList());
         return list.stream().map(teacher -> new TeacherDTO(teacher)).collect(Collectors.toList());
     }
 

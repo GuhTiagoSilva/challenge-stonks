@@ -40,14 +40,16 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label> Senha
-                </mat-label>
-                <input matInput formControlName="password" type="password" required>
-                <mat-error *ngIf="studentForm.controls.password.touched && studentForm.controls.password.invalid">
-                    <span *ngIf="studentForm.controls.password.errors.required">Campo Obrigatório.</span>
-                </mat-error>
-            </mat-form-field>
+            <div *ngIf="!id">
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label> Senha
+                    </mat-label>
+                    <input matInput formControlName="password" type="password" required>
+                    <mat-error *ngIf="studentForm.controls.password.touched && studentForm.controls.password.invalid">
+                        <span *ngIf="studentForm.controls.password.errors.required">Campo Obrigatório.</span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
 
             <mat-form-field class="form-field" appearance="outline">
                 <mat-label> Código da Matrícula
@@ -59,6 +61,11 @@
                 </mat-error>
             </mat-form-field>
         </fieldset>
-        <button type="submit" mat-raised-button color="primary" class="mt-3">Cadastrar</button>
+        <div *ngIf="!id">
+            <button type="submit" mat-raised-button color="primary" class="mt-3">Cadastrar</button>
+        </div>
+        <div *ngIf="id">
+            <button type="submit" mat-raised-button color="primary" class="mt-3">Atualizar</button>
+        </div>
     </form>
 </div>

@@ -40,7 +40,7 @@ public class StudentService {
 
     @Transactional(readOnly = true)
     public List<StudentDTO> findAll() {
-        List<Student> list = repository.findAll();
+        List<Student> list = repository.findAll().stream().filter(x -> x.getRole().getId() == 1).collect(Collectors.toList());
         return list.stream().map(x -> new StudentDTO(x)).collect(Collectors.toList());
     }
 

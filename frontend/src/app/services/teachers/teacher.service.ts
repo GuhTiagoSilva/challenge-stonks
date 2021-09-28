@@ -19,11 +19,20 @@ export class TeacherService {
   }
 
   findById(id: number) {
-    return this.httpClient.get<Teacher>(`${this.apiUrl}/${id}`);
+    return this.httpClient.get<Teacher>(`${this.apiUrl}/teachers/${id}`);
   }
 
   findAll() {
     return this.httpClient.get<Teacher[]>(`${this.apiUrl}/teachers`);
   }
+
+  update(id: number, teacher: Teacher) {
+    return this.httpClient.put<Teacher>(`${this.apiUrl}/teachers/${id}`, teacher);
+  }
+
+  delete(id: number) {
+    return this.httpClient.delete<void>(`${this.apiUrl}/teachers/${id}`);
+  }
+
 
 }

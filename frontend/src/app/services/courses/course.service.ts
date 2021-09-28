@@ -21,7 +21,15 @@ export class CourseService {
   }
 
   findById(id: number) {
-    return this.httpClient.get<Course>(`${this.apiUrl}/${id}`);
+    return this.httpClient.get<Course>(`${this.apiUrl}/courses/${id}`);
+  }
+
+  update(id: number, course: Course) {
+    return this.httpClient.put<Course>(`${this.apiUrl}/courses/${id}`, course);
+  }
+
+  delete(id: number) {
+    return this.httpClient.delete<void>(`${this.apiUrl}/courses/${id}`);
   }
 
 }
