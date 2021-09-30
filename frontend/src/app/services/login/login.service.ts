@@ -17,7 +17,6 @@ export class LoginService {
   private apiUrl = environment.apiUrl;
 
   authenticate(username: string, password: string) {
-    
     let params = new URLSearchParams();
     params.append('username', username);
     params.append('password', password);

@@ -14,6 +14,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,9 @@ public class TeacherService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Transactional(readOnly = true)
     public Page<TeacherDTO> findAllPaged(Pageable pageable) {
         Page<Teacher> list = repository.findAll(pageable);
@@ -47,6 +51,7 @@ public class TeacherService {
     public TeacherDTO insert (TeacherDTO dto) {
         Teacher entity = new Teacher();
         copyDtoToEntity(dto, entity);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity = repository.save(entity);
         return new TeacherDTO(entity);
     }
@@ -56,6 +61,7 @@ public class TeacherService {
         try {
             Teacher entity = repository.getById(id);
             copyDtoToEntity(dto, entity);
+
             entity = repository.save(entity);
             return new TeacherDTO(entity);
         } catch(EntityNotFoundException e) {
@@ -86,7 +92,6 @@ public class TeacherService {
         entity.setEmail(dto.getEmail());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
-        entity.setPassword(dto.getPassword());
         Role role = roleRepository.getById(dto.getRoleId());
         validateRole(role, entity, dto.getRoleId());
     }

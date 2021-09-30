@@ -15,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,9 @@ public class StudentService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Transactional(readOnly = true)
     public Page<StudentDTO> findAll(Pageable pageable) {
         Page<Student> list = repository.findAll(pageable);
@@ -48,6 +52,7 @@ public class StudentService {
     public StudentDTO insert (StudentDTO dto) {
         Student entity = new Student();
         copyDtoToEntity(dto, entity);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity = repository.save(entity);
         return new StudentDTO(entity);
     }
@@ -87,7 +92,6 @@ public class StudentService {
         entity.setEmail(dto.getEmail());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
-        entity.setPassword(dto.getPassword());
         Role role = roleRepository.getById(dto.getRoleId());
         validateRole(role, entity, dto.getRoleId());
     }
