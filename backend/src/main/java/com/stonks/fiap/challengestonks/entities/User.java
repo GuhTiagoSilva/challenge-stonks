@@ -83,10 +83,15 @@ public class User implements Serializable, UserDetails {
         this.email = email;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    private List<Role> addRole() {
         List<Role> roles = new ArrayList<>();
         roles.add(role);
+        return roles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<Role> roles = addRole();
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority()))
                 .collect(Collectors.toList());
     }

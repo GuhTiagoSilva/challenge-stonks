@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,13 +16,16 @@ import { HomeComponent } from './components/home/home.component';
 import { CoursesListComponent } from './components/courses/courses-list/courses-list.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { CoursesFormComponent } from './components/courses/courses-form/courses-form.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastyModule } from 'ng2-toasty';
 import { ToastComponent } from './components/toast/toast.component';
 import { ToastrModule } from 'ngx-toastr';
+import { LoginComponent } from './components/login/login.component';
+import { HttpInterceptorBasicAuthService } from './services/http/http-interceptor-basic-auth.service';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import { ToastrModule } from 'ngx-toastr';
     TeachersListComponent,
     StudentsListComponent,
     StudentsFormComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     ToastrModule.forRoot(),
@@ -53,7 +58,10 @@ import { ToastrModule } from 'ngx-toastr';
     MatFormFieldModule,
     ToastyModule.forRoot()
   ],
-  providers: [MatDatepickerModule],
+  providers: [
+    { provide: MatDatepickerModule },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorBasicAuthService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
