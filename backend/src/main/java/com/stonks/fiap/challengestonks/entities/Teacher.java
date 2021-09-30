@@ -12,6 +12,14 @@ public class Teacher extends User {
 
     private String yearsOfExperience;
 
+    public Teacher() {
+
+    }
+
+    public Teacher(String yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
+    }
+
     @ManyToMany
     @JoinTable(name = "tb_teacher_course", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Course> courses = new HashSet<>();
