@@ -23,7 +23,7 @@ public class CourseRepositoryTest {
     private long countTotalCourses;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         countTotalCourses = 10L;
         existingId = 1L;
         nonExistingId = 4000L;

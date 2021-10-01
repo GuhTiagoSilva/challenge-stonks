@@ -24,7 +24,7 @@ public class StudentRepositoryTest {
     private long countTotalStudents;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         countTotalStudents = 1L;
         existingId = 2L;
         nonExistingId = 4000L;

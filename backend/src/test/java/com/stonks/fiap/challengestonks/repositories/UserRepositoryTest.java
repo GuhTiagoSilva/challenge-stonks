@@ -23,7 +23,7 @@ public class UserRepositoryTest {
     private long countTotalUsers;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         countTotalUsers = 2L;
         existingId = 1L;
         nonExistingId = 4000L;
